@@ -1,0 +1,73 @@
+ E_PackageDemo.java :
+
+
+package command.line.apps;
+import friends.info.Friend; 
+import java.time.LocalDate;
+public class E_PackageDemo {
+ public static void main(String[] args) {
+ Friend Iyer = new Friend("Tushar N Chaudhari", LocalDate.of(2003,12,21), true);
+ Iyer.displayInfo();
+ }
+}
+
+
+Friend.java :
+
+
+package friends.info;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+public class Friend {
+ private String friendName;
+ private LocalDate dob;
+ private boolean isBestFriend;
+ private String age;
+ private String timeUntilNextBirthday;
+ public Friend(String friendName, LocalDate dob, boolean isBestFriend){
+ this.friendName = friendName;
+ this.dob = dob;
+ this.isBestFriend = isBestFriend;
+ }
+public String calculateAge() {
+ LocalDate currentDate = LocalDate.now();
+ Period period = Period.between(dob, currentDate);
+ int years = period.getYears();
+ int months = period.getMonths();
+ int days = period.getDays();
+ LocalDate nextBirthday = dob.plusYears(years + 1); 
+ Period untilNextBirthday = Period.between(currentDate, nextBirthday);
+ timeUntilNextBirthday = untilNextBirthday.getMonths() + " months & " + 
+untilNextBirthday.getDays() + " days.";
+ age = years + " years, " + months + " months, and " + days + " days" + ".";
+ return age;
+ }
+ public String getName(){
+ return friendName;
+ }
+ public LocalDate getDOB(){
+ return dob;
+ }
+ public String getAge(){
+ calculateAge();
+ return age;
+ }
+ public String getTimeUntilNextBirthday(){
+ calculateAge();
+ return timeUntilNextBirthday;
+ }
+ public String getBestFriendStatus(){
+ if(isBestFriend){
+ return "Yes.";
+ } else {
+ return "No.";
+ }
+ }
+ public void displayInfo() {
+ calculateAge(); 
+ DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+ String formattedDob = dob.format(formatter);
+ 
+
+
